@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!--  Permissions                                               -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+
+    <!-- Internet permission for network requests -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Network state permission for connectivity monitoring -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Optional: For caching images and videos -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+
+    <!-- Optional: For background downloads -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".StreamFlixApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.StreamFlix"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="tiramisu">
+
+        <!-- ══════════════════════════════════════════════════════════ -->
+        <!--  Main Activity - Single Activity Architecture             -->
+        <!-- ══════════════════════════════════════════════════════════ -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.StreamFlix"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
+
+            <!-- Launcher intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Deep link support (optional) -->
+<!--            <intent-filter android:autoVerify="true">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                &lt;!&ndash; Example: streamflix://movie/123 &ndash;&gt;-->
+<!--                <data-->
+<!--                    android:scheme="streamflix"-->
+<!--                    android:host="streamflix://movie/123" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <!-- ══════════════════════════════════════════════════════════ -->
+        <!--  Services (if needed)                                      -->
+        <!-- ══════════════════════════════════════════════════════════ -->
+
+        <!-- Example: Background download service -->
+        <!-- <service
+            android:name=".service.DownloadService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" /> -->
+
+        <!-- ══════════════════════════════════════════════════════════ -->
+        <!--  Receivers (if needed)                                     -->
+        <!-- ══════════════════════════════════════════════════════════ -->
+
+        <!-- Example: Network connectivity receiver -->
+        <!-- <receiver
+            android:name=".receiver.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver> -->
+
+    </application>
+
+</manifest>

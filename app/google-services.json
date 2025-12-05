@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "297975626395",
+    "project_id": "streamflix-ba786",
+    "storage_bucket": "streamflix-ba786.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297975626395:android:1b5573bab0e15b38d1a43e",
+        "android_client_info": {
+          "package_name": "com.asadraza.streamflix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDazj5dRdou7FmTr0cIXfv8zv-Ts19DO64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
