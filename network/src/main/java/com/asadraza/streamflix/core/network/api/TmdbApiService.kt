@@ -17,7 +17,7 @@ interface TmdbApiService {
      */
     @GET("trending/movie/week")
     suspend fun getTrendingMovies(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -25,7 +25,7 @@ interface TmdbApiService {
      */
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -33,7 +33,7 @@ interface TmdbApiService {
      */
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -41,7 +41,7 @@ interface TmdbApiService {
      */
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -49,7 +49,7 @@ interface TmdbApiService {
      */
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -69,7 +69,7 @@ interface TmdbApiService {
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("query") query: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieListResponse
 
     /**
@@ -78,7 +78,7 @@ interface TmdbApiService {
      */
     @GET("discover/movie")
     suspend fun discoverMovies(
-        @Query("page") page: Int = 1,
+        @Query("page") page: Int,
         @Query("with_genres") genres: String? = null,
         @Query("primary_release_year") year: Int? = null,
         @Query("sort_by") sortBy: String? = null

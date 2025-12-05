@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     implementation(libs.compose.material.icons.extended)
 
+    implementation(libs.bundles.paging)
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)

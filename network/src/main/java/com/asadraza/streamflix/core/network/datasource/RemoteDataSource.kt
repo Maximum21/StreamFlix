@@ -1,5 +1,6 @@
 package com.asadraza.streamflix.core.network.datasource
 
+import android.util.Log
 import com.asadraza.streamflix.core.network.api.TmdbApiService
 import com.asadraza.streamflix.core.network.model.MovieDetailDto
 import com.asadraza.streamflix.core.network.model.MovieDto
@@ -18,6 +19,7 @@ class RemoteDataSource @Inject constructor(
 ) : IRemoteDataSource {
 
     override suspend fun getTrendingMovies(page: Int): List<MovieDto> {
+        Log.e("testingpages","====$page")
         return apiService.getTrendingMovies(page).results
     }
 

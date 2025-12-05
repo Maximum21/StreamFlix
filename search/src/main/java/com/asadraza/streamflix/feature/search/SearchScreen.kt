@@ -34,16 +34,20 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.asadraza.streamflix.feature.home.components.MovieGrid
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.asadraza.streamflix.feature.home.components.PaginatedMovieGrid
 import kotlinx.coroutines.flow.collectLatest
 
 /**
- * Search Screen
+ * Search Screen with Paging 3 support
  *
- * Includes: Movie search functionality
- * User wants to find specific movies in Search tab/screen
- * TextField with debounced search, grid results
+ * Features:
+ * - Infinite scrolling search results
+ * - Debounced search input (500ms)
+ * - Loading/error states at initial and append stages
+ * - Search history (optional)
  *
+ * Uses PaginatedMovieGrid for efficient memory management
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +58,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
@@ -124,8 +129,7 @@ fun SearchScreen(
                 ),
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        // Don't lose focus on search
-                        // focusManager.clearFocus()
+                        // Keep focus for continuous searching
                     }
                 ),
                 colors = TextFieldDefaults.colors(
@@ -134,17 +138,16 @@ fun SearchScreen(
                 )
             )
 
-            // Results
-            MovieGrid(
-                movies = state.movies,
-                isLoading = state.isLoading,
-                error = state.error,
+            // Paginated Results
+            PaginatedMovieGrid(
+                movies = searchResults,
                 onMovieClick = { movieId ->
                     viewModel.onEvent(SearchEvent.OnMovieClick(movieId))
                 },
-                onRetry = {
-                    // Retry by resubmitting query
-                    viewModel.onEvent(SearchEvent.OnQueryChange(state.query))
+                emptyMessage = if (state.query.length >= 3) {
+                    "No movies found for \"${state.query}\""
+                } else {
+                    "Enter at least 3 characters to search"
                 }
             )
         }

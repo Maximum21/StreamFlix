@@ -67,6 +67,7 @@ dependencies {
     //Coroutines
     implementation(libs.bundles.coroutines)
 
+    implementation(libs.bundles.paging)
 
     //Testing
     testImplementation(libs.junit)

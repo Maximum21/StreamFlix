@@ -3,31 +3,52 @@ package com.asadraza.streamflix.feature.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.asadraza.streamflix.core.common.result.Result
+import com.asadraza.streamflix.core.common.util.Constants
+import com.asadraza.streamflix.core.domain.usecase.home.SearchMoviesPaginatedUseCase
 import com.asadraza.streamflix.core.domain.usecase.home.SearchMoviesUseCase
 import com.asadraza.streamflix.core.model.movie.Genre
+import com.asadraza.streamflix.core.model.movie.Movie
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel for Search screen
+ * ViewModel for Search screen with Paging 3 support
  *
- * Handles search with proper debounce
- * User types in search box
- * Delegates to SearchMoviesUseCase (which has debounce logic)
+ * Features:
+ * - Paginated search results with infinite scrolling
+ * - Debounced search (500ms)
+ * - Search history tracking
+ * - Genre filtering support
  *
+ * Uses MVI pattern with:
+ * - State: SearchState for UI state
+ * - Events: SearchEvent for user actions
+ * - Effects: SearchEffect for navigation/toasts
  */
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchMoviesUseCase: SearchMoviesUseCase
+    private val searchMoviesUseCase: SearchMoviesUseCase,
+    private val searchMoviesPaginatedUseCase: SearchMoviesPaginatedUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SearchState())
@@ -36,12 +57,27 @@ class SearchViewModel @Inject constructor(
     private val _effect = Channel<SearchEffect>()
     val effect = _effect.receiveAsFlow()
 
-    // Query flow for UseCase
+    // Query flow for pagination
     private val queryFlow = MutableStateFlow("")
 
-    init {
-        observeSearchResults()
-    }
+    /**
+     * Paginated search results
+     *
+     * Automatically debounced and filtered by SearchMoviesPaginatedUseCase
+     * Cached in viewModelScope to survive configuration changes
+     */
+    val searchResults: Flow<PagingData<Movie>> = queryFlow
+        .filter { it.length >= Constants.SEARCH_MIN_LENGTH }
+        .debounce(Constants.SEARCH_DEBOUNCE_MILLIS)
+        .distinctUntilChanged()
+        .flatMapLatest { query ->
+            if (query.isBlank()) {
+                flowOf(PagingData.empty())
+            } else {
+                searchMoviesPaginatedUseCase.searchImmediate(query, viewModelScope)
+            }
+        }
+        .cachedIn(viewModelScope)
 
     fun onEvent(event: SearchEvent) {
         when (event) {
@@ -54,42 +90,8 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Observe search results from UseCase
-     * UseCase handles debounce, we just collect results
-     */
-    private fun observeSearchResults() {
-        viewModelScope.launch {
-            searchMoviesUseCase(queryFlow).collect { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        _state.update { it.copy(isLoading = true, error = null) }
-                    }
-                    is Result.Success -> {
-                        Log.e("searcgmivue","==result=${Gson().toJson(result.data)}")
-                        _state.update {
-                            it.copy(
-                                movies = result.data,
-                                isLoading = false,
-                                error = null
-                            )
-                        }
-                    }
-                    is Result.Error -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                error = result.message
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun handleQueryChange(query: String) {
-        _state.update { it.copy(query = query) }
+        _state.update { it.copy(query = query, isLoading = query.length >= Constants.SEARCH_MIN_LENGTH) }
         queryFlow.value = query
     }
 
@@ -103,7 +105,6 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleBackClick() {
-
         viewModelScope.launch {
             _effect.send(SearchEffect.NavigateBack)
         }
@@ -121,7 +122,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleClearSearch() {
-        _state.update { it.copy(query = "", movies = emptyList()) }
+        _state.update { it.copy(query = "", isLoading = false) }
         queryFlow.value = ""
     }
 

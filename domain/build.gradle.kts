@@ -42,6 +42,8 @@ dependencies {
     // Coroutines
     implementation(libs.bundles.coroutines)
 
+    implementation(libs.bundles.paging)
+
     // Hilt (for @Inject)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

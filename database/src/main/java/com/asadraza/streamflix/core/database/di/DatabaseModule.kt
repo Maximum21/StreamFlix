@@ -6,6 +6,7 @@ import com.asadraza.streamflix.core.common.util.Constants
 import com.asadraza.streamflix.core.database.StreamFlixDatabase
 import com.asadraza.streamflix.core.database.dao.MovieDao
 import com.asadraza.streamflix.core.database.dao.MovieDetailDao
+import com.asadraza.streamflix.core.database.dao.RemoteKeyDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,5 +42,11 @@ object DatabaseModule {
     @Singleton
     fun provideMovieDetailDao(database: StreamFlixDatabase): MovieDetailDao {
         return database.movieDetailDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteKeyDao(database: StreamFlixDatabase): RemoteKeyDao {
+        return database.remoteKeyDao()
     }
 }

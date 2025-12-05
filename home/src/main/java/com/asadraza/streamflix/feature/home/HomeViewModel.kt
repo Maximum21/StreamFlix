@@ -3,31 +3,50 @@ package com.asadraza.streamflix.feature.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.asadraza.streamflix.core.common.result.ErrorType
 import com.asadraza.streamflix.core.common.result.Result
 import com.asadraza.streamflix.core.common.result.getUserMessage
 import com.asadraza.streamflix.core.common.result.isRetryable
+import com.asadraza.streamflix.core.domain.usecase.home.GetMoviesByCategoryPaginatedUseCase
 import com.asadraza.streamflix.core.domain.usecase.home.GetMoviesByCategoryUseCase
 import com.asadraza.streamflix.core.domain.usecase.home.RefreshMoviesUseCase
 import com.asadraza.streamflix.core.model.movie.Movie
 import com.asadraza.streamflix.core.model.movie.MovieCategory
+import com.asadraza.streamflix.core.model.movie.MovieCategory.Trending
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * HomeViewModel with enhanced Result handling
+ * HomeViewModel with Paging 3 support
+ *
+ * Features:
+ * - Paginated movie lists per category
+ * - Category switching with instant data
+ * - Offline support with cached data
+ * - Pull-to-refresh support
+ *
+ * Uses MVI pattern with:
+ * - State: HomeState for UI state
+ * - Events: HomeEvent for user actions
+ * - Effects: HomeEffect for navigation/toasts
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getMoviesByCategoryUseCase: GetMoviesByCategoryUseCase,
+    private val getMoviesByCategoryPaginatedUseCase: GetMoviesByCategoryPaginatedUseCase,
     private val refreshMoviesUseCase: RefreshMoviesUseCase
 ) : ViewModel() {
 
@@ -39,8 +58,23 @@ class HomeViewModel @Inject constructor(
     private val _effect = Channel<HomeEffect>()
     val effect: Flow<HomeEffect> = _effect.receiveAsFlow()
 
+    // Current category flow for paginated data
+    private val selectedCategoryFlow = MutableStateFlow<MovieCategory>(Trending)
+
+    /**
+     * Paginated movies for current category
+     *
+     * Automatically updates when category changes
+     * Cached in viewModelScope to survive configuration changes
+     */
+    val paginatedMovies: Flow<PagingData<Movie>> = selectedCategoryFlow
+        .flatMapLatest { category ->
+            getMoviesByCategoryPaginatedUseCase(category, viewModelScope)
+        }
+        .cachedIn(viewModelScope)
+
     init {
-        // Load all categories on init
+        // Load all categories on init (for non-paginated fallback)
         loadAllCategories()
     }
 
@@ -166,6 +200,7 @@ class HomeViewModel @Inject constructor(
      */
     private fun handleCategorySelect(category: MovieCategory) {
         _state.update { it.copy(selectedCategory = category) }
+        selectedCategoryFlow.value = category
     }
 
     /**
