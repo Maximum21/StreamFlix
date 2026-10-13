@@ -45,9 +45,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
         extensions.configure<KotlinAndroidProjectExtension> {
             jvmToolchain(17)
-            compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_17)
-            }
         }
 
         // junit is in every module's test source set

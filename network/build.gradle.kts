@@ -12,12 +12,27 @@ val secrets = Properties().apply {
 }
 
 // Local file first, then the environment variable that CI provides
-val tmdbToken = (secrets.getProperty("TMDB_ACCESS_TOKEN") ?: System.getenv("TMDB_ACCESS_TOKEN") ?: "")
-    .trim()
-    .removeSurrounding("\"")
+fun clean(raw: String?): String = (raw ?: "").trim().removeSurrounding("\"").trim()
+
+// First non-empty value wins: local file, then the CI environment variable
+val tmdbToken = listOf(secrets.getProperty("TMDB_ACCESS_TOKEN"), System.getenv("TMDB_ACCESS_TOKEN"))
+    .map(::clean)
+    .firstOrNull { it.isNotEmpty() }
+    .orEmpty()
 
 if (tmdbToken.isEmpty()) {
     logger.warn("TMDB_ACCESS_TOKEN is not set; TMDB requests will fail with 401")
+}
+
+val escapedToken = tmdbToken.replace("\\", "\\\\").replace("\"", "\\\"")
+
+// A release build without a token would ship an app that cannot reach TMDB
+tasks.matching { it.name == "preReleaseBuild" }.configureEach {
+    doFirst {
+        check(tmdbToken.isNotEmpty()) {
+            "TMDB_ACCESS_TOKEN is missing: set it in secrets.properties or as an environment variable"
+        }
+    }
 }
 
 android {
