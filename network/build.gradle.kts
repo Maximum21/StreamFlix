@@ -6,14 +6,24 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-val secretProps = Properties().apply {
-    rootProject.file("secrets.properties").inputStream().use { load(it) }
+val secrets = Properties().apply {
+    val file = rootProject.file("secrets.properties")
+    if (file.exists()) file.inputStream().use(::load)
+}
+
+// Local file first, then the environment variable that CI provides
+val tmdbToken = (secrets.getProperty("TMDB_ACCESS_TOKEN") ?: System.getenv("TMDB_ACCESS_TOKEN") ?: "")
+    .trim()
+    .removeSurrounding("\"")
+
+if (tmdbToken.isEmpty()) {
+    logger.warn("TMDB_ACCESS_TOKEN is not set; TMDB requests will fail with 401")
 }
 
 android {
     namespace = "com.asadraza.streamflix.core.network"
     defaultConfig {
-        buildConfigField("String", "TMDB_ACCESS_TOKEN", secretProps.getProperty("TMDB_ACCESS_TOKEN"))
+        buildConfigField("String", "TMDB_ACCESS_TOKEN", "\"$tmdbToken\"")
     }
     buildFeatures { buildConfig = true }
 }
