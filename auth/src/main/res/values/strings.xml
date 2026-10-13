@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Back</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="terms_and_conditions">I agree to the Terms and Conditions</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login">Login</string>
+    <string name="error_empty_email">Email cannot be empty</string>
+    <string name="error_invalid_email">Invalid email format</string>
+    <string name="error_empty_password">Password cannot be empty</string>
+    <string name="error_password_too_short">Password must be at least 8 characters</string>
+    <string name="error_password_no_uppercase">Password must contain an uppercase letter</string>
+    <string name="error_password_no_lowercase">Password must contain a lowercase letter</string>
+    <string name="error_password_no_digit">Password must contain a digit</string>
+    <string name="error_empty_name">Name cannot be empty</string>
+    <string name="error_name_too_short">Name must be at least 2 characters</string>
+    <string name="error_name_too_long">Name must be less than 50 characters</string>
+</resources>
