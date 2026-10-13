@@ -15,8 +15,8 @@
 
 | Phase | Name | Status |
 |---|---|---|
-| 0 | Secret hygiene and repo baseline | **In progress** (0.1-0.4, 0.7 done) |
-| 1 | Make CI honest | Not started |
+| 0 | Secret hygiene and repo baseline | **Done** (pending PR merge) |
+| 1 | Make CI honest | Next |
 | 2 | Data integrity | Not started |
 | 3 | Architecture cleanup | Not started |
 | 4 | App shell and stability | Not started |
@@ -25,7 +25,7 @@
 | 7 | Product features | Not started |
 | 8 | Polish, release and portfolio | Not started |
 
-**NEXT ACTION:** Phase 0: finish 0.5 (add `LICENSE`, `README.md` stub), then 0.6 (build works without secrets: env fallback + quoting in `network/build.gradle.kts`, `jvmToolchain(17)`), then Gate 0 verification. Work on `chore/repo-baseline` and open a PR into `main`.
+**NEXT ACTION:** Phase 1, step 1.1: remove the `:download` module (module folder, `Screen.Downloads`, bottom-nav entry, unused permissions). Branch `chore/remove-download-module`.
 
 ## Repo snapshot (as of 2026-10-07, before Phase 0.2)
 - Branch: `work_in_progress` (pushed to `origin/work_in_progress`), `main` also exists. 2 commits: `f9d6239`, `5b08741`. About 103 uncommitted entries.
@@ -44,9 +44,9 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. "(confirmed manually)" = cann
 - [x] 0.3 Untrack secrets; add `secrets.properties.example` (commit f93a03d, 2026-10-13)
 - [x] 0.4 History reset: single clean commit 2c834fb force-pushed to `main`; remote `work_in_progress` deleted; old local objects purged (2026-10-13). Backup of old repo at ../StreamFlix-backup (delete when no longer needed)
 - [x] 0.5 Baseline files committed (gradlew, config/detekt, CI workflow, schemas, module .gitignores, build-logic, docs, LICENSE, README)
-- [ ] 0.6 Build works without secrets: env fallback in `network/build.gradle.kts`, quote handling, `jvmToolchain(17)` in convention plugins (F-BUILD-1)
+- [x] 0.6 Build works without secrets: env fallback and quote handling in `network/build.gradle.kts`, JDK 17 toolchain in the library convention plugin (fresh clone builds `:network` and `:domain`)
 - [x] 0.7 Hardcoded credentials / pre-ticked terms removed from `SignUpContract.kt` (included in 2c834fb)
-- [ ] **Gate 0** verified (see PLAN.md Gate 0)
+- [x] **Gate 0** verified (2026-10-13): rotated keys, no secrets in tree or history, fresh clone builds without secrets. Full `:app` assembly still needs `google-services.json` (injected in CI, Phase 1)
 
 ### Phase 1: Make CI honest
 - [ ] 1.1 Delete `:download` module, `Screen.Downloads`, nav item, unused permissions
