@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:NetworkModule.kt$NetworkModule$30</ID>
+    <ID>MagicNumber:SafeApiCall.kt$401</ID>
+    <ID>MagicNumber:SafeApiCall.kt$403</ID>
+    <ID>MagicNumber:SafeApiCall.kt$404</ID>
+    <ID>MagicNumber:SafeApiCall.kt$429</ID>
+    <ID>SwallowedException:SafeApiCall.kt$e: Exception</ID>
+    <ID>ThrowsCount:SafeApiCall.kt$suspend fun &lt;T&gt; safeApiCall(block: suspend () -&gt; T): T</ID>
+    <ID>TooGenericExceptionCaught:SafeApiCall.kt$e: Exception</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // User document: readable and creatable only by its owner. uid and createdAt are immutable.
+    // profileCount is maintained by the client inside the profile transactions below.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.email is string
+        && request.resource.data.createdAt is int;
+
+      allow update: if isOwner(uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (!('profileCount' in request.resource.data)
+            || (request.resource.data.profileCount is int
+                && request.resource.data.profileCount >= 0
+                && request.resource.data.profileCount <= 5));
+
+      // Account deletion removes the user document together with the profiles
+      allow delete: if isOwner(uid);
+
+      function profileCountBefore() {
+        return get(/databases/$(database)/documents/users/$(uid)).data.get('profileCount', 0);
+      }
+
+      function profileCountAfter() {
+        return getAfter(/databases/$(database)/documents/users/$(uid)).data.get('profileCount', 0);
+      }
+
+      // Profiles: owner only, at most 5, validated shape.
+      match /profiles/{profileId} {
+        function validProfile(data) {
+          return data.keys().hasOnly(['name', 'avatarUrl', 'isKidsProfile', 'createdAt', 'updatedAt'])
+            && data.name is string
+            && data.name.size() > 0
+            && data.name.size() <= 20
+            && data.avatarUrl is string
+            && data.avatarUrl.size() <= 512
+            && data.isKidsProfile is bool
+            && data.createdAt is int
+            && data.updatedAt is int;
+        }
+
+        allow read: if isOwner(uid);
+
+        // The count on the parent document is updated in the same write. Requiring it to move by
+        // exactly one and to stay within the limit enforces the cap on the server.
+        allow create: if isOwner(uid)
+          && validProfile(request.resource.data)
+          && profileCountAfter() == profileCountBefore() + 1
+          && profileCountAfter() <= 5;
+
+        allow update: if isOwner(uid)
+          && validProfile(request.resource.data)
+          && request.resource.data.createdAt == resource.data.createdAt;
+
+        // Deleting must lower the count by one and leave at least one profile, unless the same
+        // write deletes the user document (account deletion)
+        allow delete: if isOwner(uid)
+          && (!existsAfter(/databases/$(database)/documents/users/$(uid))
+              || (profileCountAfter() == profileCountBefore() - 1 && profileCountAfter() >= 1));
+
+        // My List: titles the profile saved. The title snapshot lets the list render offline.
+        match /list/{movieId} {
+          function validListItem(data) {
+            return data.keys().hasOnly(['movieId', 'title', 'posterPath', 'addedAt'])
+              && data.movieId == movieId
+              && data.title is string
+              && data.title.size() > 0
+              && data.title.size() <= 200
+              && (data.posterPath == null || (data.posterPath is string && data.posterPath.size() <= 200))
+              && data.addedAt is int;
+          }
+
+          allow read, delete: if isOwner(uid);
+          allow create, update: if isOwner(uid) && validListItem(request.resource.data);
+        }
+
+        // Watch history: one document per title with the latest trailer position
+        match /history/{movieId} {
+          function validHistoryItem(data) {
+            return data.keys().hasOnly(['movieId', 'title', 'posterPath', 'backdropPath', 'watchedAt', 'positionMillis'])
+              && data.movieId == movieId
+              && data.title is string
+              && data.title.size() <= 200
+              && (data.posterPath == null || (data.posterPath is string && data.posterPath.size() <= 200))
+              && (data.backdropPath == null || (data.backdropPath is string && data.backdropPath.size() <= 200))
+              && data.watchedAt is int
+              && data.positionMillis is int
+              && data.positionMillis >= 0;
+          }
+
+          allow read, delete: if isOwner(uid);
+          allow create, update: if isOwner(uid) && validHistoryItem(request.resource.data);
+        }
+      }
+    }
+
+    // Everything else is closed
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

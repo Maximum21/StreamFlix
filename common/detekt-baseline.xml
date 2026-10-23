@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>UseCheckOrError:Result.kt$throw IllegalStateException("No data available in Loading state")</ID>
+  </CurrentIssues>
+</SmellBaseline>

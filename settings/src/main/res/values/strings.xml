@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_section_account">Account</string>
+    <string name="settings_signed_in_as">Signed in as</string>
+    <string name="settings_sign_out">Sign out</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="settings_delete_account_summary">Permanently remove your account, profiles and saved titles</string>
+
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_analytics">Share usage analytics</string>
+    <string name="settings_analytics_summary">Anonymous usage data that helps improve the app</string>
+    <string name="settings_notifications">New release notifications</string>
+    <string name="settings_notifications_summary">Hear about new titles as they arrive</string>
+    <string name="settings_privacy_policy">Privacy policy</string>
+
+    <string name="settings_section_storage">Storage</string>
+    <string name="settings_clear_cache">Clear cache</string>
+    <string name="settings_clear_cache_summary">Remove downloaded movie lists and details from this device</string>
+    <string name="settings_cache_cleared">Cache cleared</string>
+
+    <string name="settings_section_about">About</string>
+    <string name="settings_version">Version %1$s</string>
+    <string name="settings_tmdb_attribution">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
+
+    <string name="delete_dialog_title">Delete account?</string>
+    <string name="delete_dialog_message">This cannot be undone. Enter your password to confirm.</string>
+    <string name="delete_dialog_password">Password</string>
+    <string name="delete_dialog_confirm">Delete</string>
+    <string name="delete_dialog_cancel">Cancel</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_summary">Choose the language of the app</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">Match system</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+</resources>

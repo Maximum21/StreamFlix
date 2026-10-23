@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StreamFlix privacy policy</title>
+  <style>
+    body { font: 16px/1.6 system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; color: #1b1b1f; }
+    h1, h2 { line-height: 1.25; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #c9c9d0; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+    @media (prefers-color-scheme: dark) { body { background: #121214; color: #e6e6ea; } th, td { border-color: #44444c; } a { color: #ff8a80; } }
+  </style>
+</head>
+<body>
+  <h1>Privacy policy</h1>
+  <p>Effective 23 October 2026. This policy describes what the StreamFlix app collects, why, and the choices you have.</p>
+
+  <h2>What the app does</h2>
+  <p>StreamFlix is a movie discovery app. It shows information about films from The Movie Database (TMDB) and plays official trailers through YouTube. It does not stream films, show ads or sell data.</p>
+
+  <h2>Data we collect</h2>
+  <table>
+    <tr><th>Data</th><th>Why</th><th>Where it is processed</th></tr>
+    <tr><td>Email address, display name and a password (stored only as a salted hash by the sign-in provider)</td><td>Creating and securing your account</td><td>Firebase Authentication</td></tr>
+    <tr><td>Profile names, avatar choice and kids-profile setting; titles you add to My List; trailers you watched and where you stopped</td><td>Providing the app's features across your devices</td><td>Cloud Firestore, stored under your account</td></tr>
+    <tr><td>Crash reports and performance traces (device model, OS version, app version, stack traces)</td><td>Finding and fixing bugs and slow screens</td><td>Firebase Crashlytics and Performance Monitoring</td></tr>
+    <tr><td>Anonymous usage events such as screens opened and trailers played. Never the text you search for.</td><td>Understanding which features are used. <strong>Only if you allow it.</strong></td><td>Firebase Analytics</td></tr>
+    <tr><td>A messaging token</td><td>Delivering new-release notifications. <strong>Only if you turn notifications on.</strong></td><td>Firebase Cloud Messaging</td></tr>
+  </table>
+  <p>When the app loads film information and posters, your device contacts TMDB and its image servers, which receive your IP address as part of any web request. Trailers are played by YouTube's embedded player, which is subject to <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>.</p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li><strong>Analytics</strong> is off until you answer the prompt, and you can change your answer under Settings → Privacy at any time.</li>
+    <li><strong>Notifications</strong> are off until you turn them on under Settings.</li>
+    <li><strong>Delete your account</strong> under Settings → Delete account. This removes your profiles, My List, watch history and the account itself.</li>
+    <li><strong>Clear cache</strong> under Settings removes the film data stored on your device.</li>
+  </ul>
+
+  <h2>Retention</h2>
+  <p>Account data is kept until you delete your account. Crash and analytics data are retained by Firebase according to its standard retention settings.</p>
+
+  <h2>Children</h2>
+  <p>The app is not directed at children under 13 and does not knowingly collect their data. A "kids profile" only limits what the app shows inside an adult's account.</p>
+
+  <h2>Security</h2>
+  <p>Traffic is encrypted with HTTPS, access to your stored data is restricted to your account by server-side rules, and backups of app data are disabled.</p>
+
+  <h2>Changes and contact</h2>
+  <p>If this policy changes, the effective date above is updated. Questions can be raised through the issue tracker of the project's GitHub repository.</p>
+
+  <p><small>This product uses the TMDB API but is not endorsed or certified by TMDB.</small></p>
+</body>
+</html>

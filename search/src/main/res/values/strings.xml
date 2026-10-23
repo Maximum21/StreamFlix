@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_recent">Recent searches</string>
+    <string name="search_clear_history">Clear all</string>
+    <string name="search_remove_history_item">Remove %1$s from recent searches</string>
+    <string name="search_title">Search Movies</string>
+    <string name="search_placeholder">Search for movies...</string>
+    <string name="search_icon_description">Search</string>
+    <string name="search_clear">Clear</string>
+    <string name="search_no_results">No movies found for \"%1$s\"</string>
+    <string name="search_min_chars">Enter at least %1$d characters to search</string>
+</resources>
