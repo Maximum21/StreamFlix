@@ -60,7 +60,7 @@ jobs:
           fi
           echo "VERSION_NAME=$BRANCH_VERSION" >> "$GITHUB_ENV"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
 
