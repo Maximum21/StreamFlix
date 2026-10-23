@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_no_internet">Comprueba tu conexión a internet</string>
+    <string name="error_timeout">La solicitud tardó demasiado. Inténtalo de nuevo</string>
+    <string name="error_server">El servidor tiene problemas. Inténtalo más tarde</string>
+    <string name="error_rate_limit">Demasiadas solicitudes. Espera un momento</string>
+    <string name="error_parsing">No pudimos leer la respuesta del servidor</string>
+    <string name="error_network_generic">Se produjo un error de red</string>
+    <string name="error_database">Error de almacenamiento local. Es posible que tus datos no se guarden</string>
+    <string name="error_http_not_found">Contenido no encontrado</string>
+    <string name="error_http_client">La solicitud falló (%1$d)</string>
+    <string name="error_http_server">Error del servidor. Inténtalo más tarde</string>
+    <string name="error_http_generic">Algo salió mal (%1$d)</string>
+    <string name="error_unknown">Ocurrió un error inesperado</string>
+    <string name="validation_name_blank">El nombre del perfil no puede estar vacío</string>
+    <string name="validation_name_too_long">El nombre del perfil es demasiado largo (máx. 20 caracteres)</string>
+    <string name="validation_max_profiles">Has alcanzado el número máximo de perfiles</string>
+    <string name="validation_last_profile">No puedes eliminar tu último perfil</string>
+    <string name="auth_not_signed_in">Inicia sesión para continuar</string>
+    <string name="auth_session_expired">Tu sesión ha caducado. Inicia sesión de nuevo</string>
+    <string name="auth_email_not_verified">Verifica tu correo antes de iniciar sesión</string>
+    <string name="auth_invalid_credentials">Correo o contraseña incorrectos</string>
+    <string name="auth_email_in_use">Ya existe una cuenta con este correo</string>
+    <string name="auth_weak_password">Elige una contraseña más segura</string>
+    <string name="auth_too_many_requests">Demasiados intentos. Inténtalo más tarde</string>
+    <string name="auth_forbidden">No tienes acceso a esto</string>
+    <string name="offline_description">Sin conexión</string>
+    <string name="offline_banner">Mostrando resultados guardados. Sin conexión a internet.</string>
+    <string name="action_retry">Reintentar</string>
+    <string name="grid_empty">No se encontraron películas</string>
+    <string name="grid_load_failed">No se pudieron cargar las películas</string>
+    <string name="grid_retry_more">Reintentar cargar más</string>
+</resources>

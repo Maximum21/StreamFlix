@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="window_background">#FFF7F7F8</color>
+    <!-- Backdrop of the launcher icon and the splash screen, sampled from the icon artwork -->
+    <color name="ic_launcher_background">#100A14</color>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="player_back">Back</string>
+    <string name="player_no_trailer">No trailer available for this title</string>
+    <string name="player_embed_blocked">This trailer can\'t be played inside the app.</string>
+    <string name="player_watch_on_youtube">Watch on YouTube</string>
+</resources>

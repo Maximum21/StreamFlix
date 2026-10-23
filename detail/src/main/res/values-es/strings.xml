@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_share">Compartir</string>
+    <string name="detail_share_chooser">Compartir mediante</string>
+    <string name="detail_add_to_list">Mi lista</string>
+    <string name="detail_in_list">En mi lista</string>
+    <string name="detail_director">Dirigida por %1$s</string>
+    <string name="detail_cast">Reparto</string>
+    <string name="detail_similar">Más como esta</string>
+    <string name="detail_loading">Cargando…</string>
+    <string name="detail_back">Atrás</string>
+    <string name="detail_overview">Sinopsis</string>
+    <string name="detail_production_companies">Productoras</string>
+    <string name="detail_play_trailer">Ver tráiler</string>
+    <string name="detail_rating">Valoración</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_continue_watching">Continue watching</string>
+    <string name="home_my_list">My List</string>
+    <string name="home_play">Play trailer</string>
+    <string name="home_details">Details</string>
+    <string name="home_remove_continue_watching">Remove %1$s from continue watching</string>
+    <string name="home_row_unavailable">Could not load this row</string>
+    <string name="home_row_retry">Retry</string>
+    <string name="category_trending">Trending Now</string>
+    <string name="category_top_rated">Top Rated</string>
+    <string name="category_popular">Popular</string>
+    <string name="category_upcoming">Coming Soon</string>
+    <string name="category_now_playing">Now Playing</string>
+    <string name="home_search">Search</string>
+</resources>

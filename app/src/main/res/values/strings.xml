@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">@string/brand_name</string>
+
+    <string name="notification_channel_id" translatable="false">new_releases</string>
+    <string name="notification_channel_name">New releases</string>
+
+    <string name="consent_title">Help improve %1$s?</string>
+    <string name="consent_message">Share anonymous usage data, such as which screens are used, so we can improve the app. It never includes what you search for or your account details. You can change this any time in Settings.</string>
+    <string name="consent_allow">Allow</string>
+    <string name="consent_decline">No thanks</string>
+</resources>

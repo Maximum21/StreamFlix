@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- No cleartext traffic anywhere -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+        TMDB API is served from Amazon-issued certificates. The pins are the Amazon Root CA 1
+        public key and the current Amazon RSA 2048 M04 intermediate, not the leaf, so routine leaf
+        renewals do not break the app. See docs/adr/004-certificate-pinning.md before changing.
+        The pin set stops being enforced after the expiration date, so an outdated install
+        degrades to normal TLS validation instead of failing every request.
+    -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="false">api.themoviedb.org</domain>
+        <pin-set expiration="2027-12-31">
+            <pin digest="SHA-256">++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=</pin>
+            <pin digest="SHA-256">G9LNNAql897egYsabashkzUCTEJkWBzgoEtk8X/678c=</pin>
+        </pin-set>
+    </domain-config>
+
+    <!-- Lets debug builds trust a user-installed proxy certificate for traffic inspection -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

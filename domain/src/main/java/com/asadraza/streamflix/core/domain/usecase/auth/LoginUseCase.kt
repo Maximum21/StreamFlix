@@ -1,0 +1,19 @@
+package com.asadraza.streamflix.core.domain.usecase.auth
+
+import com.asadraza.streamflix.core.common.result.Result
+import com.asadraza.streamflix.core.domain.repository.AuthRepository
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+
+/**
+ * Use case for user login with email and password.
+ */
+class LoginUseCase
+@Inject
+constructor(
+    private val authRepository: AuthRepository
+) {
+    operator fun invoke(email: String, password: String): Flow<Result<Unit>> {
+        return authRepository.login(email, password)
+    }
+}

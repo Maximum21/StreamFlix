@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_created">Profile created</string>
+    <string name="profile_updated">Profile updated</string>
+    <string name="profile_deleted">Profile deleted</string>
+    <string name="create_first_profile">Create your first profile</string>
+    <string name="profile_name_label">Profile Name</string>
+    <string name="profile_kids">Kids Profile</string>
+    <string name="profile_kids_summary">Only show age-appropriate content</string>
+    <string name="profile_avatar_soon">Avatar selection coming soon</string>
+    <string name="profile_update">Update</string>
+    <string name="profile_create">Create</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="profile_delete_title">Delete Profile?</string>
+    <string name="profile_delete_confirm">Are you sure you want to delete \"%1$s\"?</string>
+    <string name="profile_delete_warning">This action cannot be undone. All profile data and preferences will be permanently deleted.</string>
+    <string name="profile_create_title">Create Profile</string>
+    <string name="profile_edit_title">Edit Profile</string>
+    <string name="profile_manage_title">Manage Profiles</string>
+    <string name="profile_back">Back</string>
+    <string name="profile_add">Add Profile</string>
+    <string name="profile_max_reached">Maximum %1$d profiles reached</string>
+    <string name="profile_edit_description">Edit %1$s</string>
+    <string name="profile_delete_description">Delete %1$s</string>
+    <string name="profile_none_title">No Profiles Yet</string>
+    <string name="profile_create_first">Create First Profile</string>
+    <string name="profile_whos_watching">Who\'s watching?</string>
+    <string name="profile_manage_button">Manage Profiles</string>
+    <string name="profile_kids_badge">KIDS</string>
+    <string name="profile_none_prompt">Create your first profile to get started</string>
+    <string name="profile_create_button">Create Profile</string>
+</resources>

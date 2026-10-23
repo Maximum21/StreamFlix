@@ -1,0 +1,148 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // A user document holds only these fields, with these types and sizes, so an account cannot be used
+    // to store arbitrary data. Missing fields are tolerated because older documents lack some of them.
+    function validUser(data, uid) {
+      return data.keys().hasOnly(['uid', 'email', 'displayName', 'createdAt', 'emailVerified', 'profileCount'])
+        && data.uid == uid
+        && data.get('email', '') is string
+        && data.get('email', '').size() <= 320
+        && (data.get('displayName', null) == null
+            || (data.displayName is string && data.displayName.size() <= 100))
+        && data.get('emailVerified', false) is bool
+        && data.get('createdAt', 0) is int
+        && data.get('profileCount', 0) is int
+        && data.get('profileCount', 0) >= 0
+        && data.get('profileCount', 0) <= 5;
+    }
+
+    // User document: readable and creatable only by its owner. uid must always equal the document id
+    // (the app writes it with every change, which also completes documents created before it was
+    // stored) and createdAt, once stored, is immutable.
+    //
+    // profileCount backs the "at most 5 profiles" and "keep one profile" rules. It is written by the
+    // owner's own client, so these are product invariants that keep the app consistent, not a security
+    // boundary: an owner who edits their own data by hand can only affect their own account.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+
+      allow create: if isOwner(uid)
+        && validUser(request.resource.data, uid)
+        && request.resource.data.email is string
+        && request.resource.data.createdAt is int;
+
+      allow update: if isOwner(uid)
+        && validUser(request.resource.data, uid)
+        && (!('createdAt' in resource.data)
+            || request.resource.data.createdAt == resource.data.createdAt);
+
+      // Account deletion removes the user document together with the profiles
+      allow delete: if isOwner(uid);
+
+      // A missing document or a missing field counts as zero profiles, so accounts that predate the
+      // counter can create their first profile
+      function profileCountBefore() {
+        return exists(/databases/$(database)/documents/users/$(uid))
+          ? get(/databases/$(database)/documents/users/$(uid)).data.get('profileCount', 0)
+          : 0;
+      }
+
+      function profileCountAfter() {
+        return existsAfter(/databases/$(database)/documents/users/$(uid))
+          ? getAfter(/databases/$(database)/documents/users/$(uid)).data.get('profileCount', 0)
+          : 0;
+      }
+
+      // Entries can only be written under a profile that exists. Otherwise data could pile up under ids
+      // that account deletion never visits.
+      function profileExists(profileId) {
+        return exists(/databases/$(database)/documents/users/$(uid)/profiles/$(profileId));
+      }
+
+      // Profiles: owner only, at most 5, validated shape.
+      match /profiles/{profileId} {
+        function validProfile(data) {
+          return data.keys().hasOnly(['name', 'avatarUrl', 'isKidsProfile', 'createdAt', 'updatedAt'])
+            && data.name is string
+            && data.name.size() > 0
+            && data.name.size() <= 20
+            && data.avatarUrl is string
+            && data.avatarUrl.size() <= 512
+            && data.isKidsProfile is bool
+            && data.createdAt is int
+            && data.updatedAt is int;
+        }
+
+        allow read: if isOwner(uid);
+
+        // The count on the parent document is updated in the same write. Requiring it to move by
+        // exactly one and to stay within the limit keeps the counter honest for the app. As noted on the
+        // user document, the counter is an app invariant, not a security boundary.
+        allow create: if isOwner(uid)
+          && validProfile(request.resource.data)
+          && profileCountAfter() == profileCountBefore() + 1
+          && profileCountAfter() <= 5;
+
+        allow update: if isOwner(uid)
+          && validProfile(request.resource.data)
+          && request.resource.data.createdAt == resource.data.createdAt;
+
+        // Deleting must lower the count by one and leave at least one profile, unless the same
+        // write deletes the user document (account deletion)
+        allow delete: if isOwner(uid)
+          && (!existsAfter(/databases/$(database)/documents/users/$(uid))
+              || (profileCountAfter() == profileCountBefore() - 1 && profileCountAfter() >= 1));
+
+        // My List: titles the profile saved. The title snapshot lets the list render offline.
+        match /list/{movieId} {
+          function validListItem(data) {
+            return data.keys().hasOnly(['movieId', 'title', 'posterPath', 'addedAt'])
+              && data.movieId == movieId
+              && data.title is string
+              && data.title.size() > 0
+              && data.title.size() <= 200
+              && (data.posterPath == null || (data.posterPath is string && data.posterPath.size() <= 200))
+              && data.addedAt is int;
+          }
+
+          allow read, delete: if isOwner(uid);
+          allow create, update: if isOwner(uid) && profileExists(profileId) && validListItem(request.resource.data);
+        }
+
+        // Watch history: one document per title with the latest trailer position
+        match /history/{movieId} {
+          function validHistoryItem(data) {
+            return data.keys().hasOnly(['movieId', 'title', 'posterPath', 'backdropPath', 'watchedAt', 'positionMillis'])
+              && data.movieId == movieId
+              && data.title is string
+              && data.title.size() <= 200
+              && (data.posterPath == null || (data.posterPath is string && data.posterPath.size() <= 200))
+              && (data.backdropPath == null || (data.backdropPath is string && data.backdropPath.size() <= 200))
+              && data.watchedAt is int
+              && data.positionMillis is int
+              && data.positionMillis >= 0;
+          }
+
+          allow read, delete: if isOwner(uid);
+          allow create, update: if isOwner(uid) && profileExists(profileId) && validHistoryItem(request.resource.data);
+        }
+      }
+    }
+
+    // Everything else is closed
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

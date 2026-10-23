@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>CognitiveComplexMethod:ForgotPasswordScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ForgotPasswordScreen(onNavigateToLogin: () -&gt; Unit, viewModel: ForgotPasswordViewModel = hiltViewModel())</ID>
+    <ID>CognitiveComplexMethod:LoginScreen.kt$@Composable fun LoginScreen( onNavigateToHome: () -&gt; Unit, onNavigateToSignUp: () -&gt; Unit, onNavigateToForgotPassword: () -&gt; Unit, viewModel: LoginViewModel = hiltViewModel() )</ID>
+    <ID>CognitiveComplexMethod:SignUpScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SignUpScreen( onNavigateToLogin: () -&gt; Unit, onNavigateToEmailVerification: () -&gt; Unit, viewModel: SignUpViewModel = hiltViewModel() )</ID>
+    <ID>CyclomaticComplexMethod:SignUpScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SignUpScreen( onNavigateToLogin: () -&gt; Unit, onNavigateToEmailVerification: () -&gt; Unit, viewModel: SignUpViewModel = hiltViewModel() )</ID>
+    <ID>UnusedPrivateProperty:LoginViewModel.kt$LoginViewModel$val passwordValidation = validatePasswordUseCase(_state.value.password)</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_no_internet">Please check your internet connection</string>
+    <string name="error_timeout">Request took too long. Please try again</string>
+    <string name="error_server">Server is experiencing issues. Please try again later</string>
+    <string name="error_rate_limit">Too many requests. Please wait a moment</string>
+    <string name="error_parsing">We could not read the server response</string>
+    <string name="error_network_generic">Network error occurred</string>
+    <string name="error_database">Local storage error. Your data may not be saved</string>
+    <string name="error_http_not_found">Content not found</string>
+    <string name="error_http_client">Request failed (%1$d)</string>
+    <string name="error_http_server">Server error. Please try again later</string>
+    <string name="error_http_generic">Something went wrong (%1$d)</string>
+    <string name="error_unknown">An unexpected error occurred</string>
+
+    <string name="validation_name_blank">Profile name cannot be blank</string>
+    <string name="validation_name_too_long">Profile name is too long (max 20 characters)</string>
+    <string name="validation_max_profiles">You have reached the maximum number of profiles</string>
+    <string name="validation_last_profile">You cannot delete your last profile</string>
+
+    <string name="auth_not_signed_in">Please sign in to continue</string>
+    <string name="auth_session_expired">Your session has expired. Please log in again</string>
+    <string name="auth_email_not_verified">Please verify your email before logging in</string>
+    <string name="auth_invalid_credentials">Invalid email or password</string>
+    <string name="auth_email_in_use">An account with this email already exists</string>
+    <string name="auth_weak_password">Choose a stronger password</string>
+    <string name="auth_too_many_requests">Too many attempts. Please try again later</string>
+    <string name="auth_forbidden">You do not have access to this</string>
+    <string name="brand_name" translatable="false">StreamFlix</string>
+    <string name="offline_description">Offline</string>
+    <string name="offline_banner">Showing cached results. No internet connection.</string>
+    <string name="action_retry">Retry</string>
+    <string name="grid_empty">No movies found</string>
+    <string name="grid_load_failed">Failed to load movies</string>
+    <string name="grid_retry_more">Retry loading more</string>
+</resources>

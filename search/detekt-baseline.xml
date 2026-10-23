@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:SearchViewModel.kt$SearchViewModel$10</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_continue_watching">Seguir viendo</string>
+    <string name="home_my_list">Mi lista</string>
+    <string name="home_play">Ver tráiler</string>
+    <string name="home_details">Detalles</string>
+    <string name="home_remove_continue_watching">Quitar %1$s de seguir viendo</string>
+    <string name="home_row_unavailable">No se pudo cargar esta fila</string>
+    <string name="home_row_retry">Reintentar</string>
+    <string name="category_trending">Tendencias</string>
+    <string name="category_top_rated">Mejor valoradas</string>
+    <string name="category_popular">Populares</string>
+    <string name="category_upcoming">Próximamente</string>
+    <string name="category_now_playing">En cartelera</string>
+    <string name="home_search">Buscar</string>
+</resources>
