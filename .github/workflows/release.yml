@@ -96,7 +96,7 @@ jobs:
         run: ./gradlew :app:bundleRelease
 
       - name: Upload the bundle and the R8 mapping
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-bundle
           retention-days: 30
