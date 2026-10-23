@@ -68,7 +68,7 @@ ktlint = "12.1.1"
 # ═══════════════════════════════════════════════════════════
 
 # Splash Screen
-core-splashscreen = "1.0.1"
+core-splashscreen = "1.2.0"
 
 # Logging
 timber = "5.0.1"
