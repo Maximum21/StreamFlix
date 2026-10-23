@@ -79,7 +79,7 @@ desugar-jdk = "2.0.4"
 # Memory Leak Detection
 leakcanary = "2.12"
 
-paging = "3.3.2"
+paging = "3.5.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
