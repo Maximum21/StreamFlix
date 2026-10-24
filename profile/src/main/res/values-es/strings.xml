@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_name_label">Nombre del perfil</string>
+    <string name="profile_kids">Perfil infantil</string>
+    <string name="profile_kids_summary">Mostrar solo contenido apto para su edad</string>
+    <string name="profile_avatar_soon">Pronto podrás elegir un avatar</string>
+    <string name="profile_update">Actualizar</string>
+    <string name="profile_create">Crear</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="profile_delete_title">¿Eliminar perfil?</string>
+    <string name="profile_delete_confirm">¿Seguro que quieres eliminar «%1$s»?</string>
+    <string name="profile_delete_warning">Esta acción no se puede deshacer. Se eliminarán para siempre todos los datos y preferencias del perfil.</string>
+    <string name="profile_create_title">Crear perfil</string>
+    <string name="profile_edit_title">Editar perfil</string>
+    <string name="profile_manage_title">Administrar perfiles</string>
+    <string name="profile_back">Atrás</string>
+    <string name="profile_add">Añadir perfil</string>
+    <string name="profile_max_reached">Máximo de %1$d perfiles alcanzado</string>
+    <string name="profile_edit_description">Editar %1$s</string>
+    <string name="profile_delete_description">Eliminar %1$s</string>
+    <string name="profile_none_title">Aún no hay perfiles</string>
+    <string name="profile_create_first">Crear primer perfil</string>
+    <string name="profile_whos_watching">¿Quién está viendo?</string>
+    <string name="profile_manage_button">Administrar perfiles</string>
+    <string name="profile_kids_badge">INFANTIL</string>
+    <string name="profile_none_prompt">Crea tu primer perfil para empezar</string>
+    <string name="profile_create_button">Crear perfil</string>
+    <string name="profile_created">Perfil creado</string>
+    <string name="profile_updated">Perfil actualizado</string>
+    <string name="profile_deleted">Perfil eliminado</string>
+    <string name="create_first_profile">Crea tu primer perfil</string>
+</resources>

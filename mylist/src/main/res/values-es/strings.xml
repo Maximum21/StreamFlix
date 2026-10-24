@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_list_title">Mi lista</string>
+    <string name="my_list_empty">Tu lista está vacía. Añade títulos desde su página de detalle.</string>
+</resources>

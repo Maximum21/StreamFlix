@@ -1,0 +1,36 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+google-services.json
+secrets.properties
+keystore.properties
+*.jks
+
+# Kotlin/ IDE / build-logic outputs
+.kotlin/
+.idea/
+build-logic/**/build/
+*.hprof
+
+
+# Secrets and signing (never commit)
+*.keystore
+
+# Firebase emulator tests
+firebase/node_modules/
+firebase/*-debug.log
+
+# Build output of every module
+**/build/

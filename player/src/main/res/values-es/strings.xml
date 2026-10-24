@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="player_back">Atrás</string>
+    <string name="player_no_trailer">No hay tráiler disponible para este título</string>
+    <string name="player_embed_blocked">Este tráiler no se puede reproducir dentro de la app.</string>
+    <string name="player_watch_on_youtube">Ver en YouTube</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>CognitiveComplexMethod:NetworkBoundResource.kt$inline fun &lt;ResultType, RequestType&gt; networkBoundResource( crossinline query: () -&gt; Flow&lt;ResultType?&gt;, crossinline fetch: suspend () -&gt; RequestType, crossinline saveFetchResult: suspend (RequestType) -&gt; Unit, crossinline shouldFetch: suspend (ResultType?) -&gt; Boolean = { true }, crossinline onFetchFailed: (Throwable) -&gt; Unit = { } ): Flow&lt;Result&lt;ResultType&gt;&gt;</ID>
+    <ID>TooGenericExceptionCaught:NetworkBoundResource.kt$throwable: Throwable</ID>
+  </CurrentIssues>
+</SmellBaseline>
