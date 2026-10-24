@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.asadraza.streamflix.core.common.util.Constants
 import com.asadraza.streamflix.core.model.movie.Genre
 import com.asadraza.streamflix.core.ui.components.PaginatedMovieGrid
 
@@ -117,19 +118,17 @@ fun SearchScreen(
                     onMovieClick = { viewModel.onEvent(SearchEvent.OnMovieClick(it)) },
                     emptyMessage = when {
                         state.selectedGenres.isNotEmpty() -> stringResource(R.string.search_no_genre_results)
-                        state.query.length >= MIN_QUERY_LENGTH -> stringResource(
+                        state.query.trim().length >= Constants.SEARCH_MIN_LENGTH -> stringResource(
                             R.string.search_no_results,
                             state.query
                         )
-                        else -> stringResource(R.string.search_min_chars, MIN_QUERY_LENGTH)
+                        else -> stringResource(R.string.search_min_chars, Constants.SEARCH_MIN_LENGTH)
                     }
                 )
             }
         }
     }
 }
-
-private const val MIN_QUERY_LENGTH = 3
 
 @Composable
 private fun SearchField(query: String, onQueryChange: (String) -> Unit, onClear: () -> Unit) {

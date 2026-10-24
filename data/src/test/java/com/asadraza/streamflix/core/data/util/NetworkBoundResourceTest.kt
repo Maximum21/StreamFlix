@@ -2,6 +2,7 @@ package com.asadraza.streamflix.core.data.util
 
 import app.cash.turbine.test
 import com.asadraza.streamflix.core.common.result.Result
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -135,5 +136,29 @@ class NetworkBoundResourceTest {
 
             awaitComplete()
         }
+    }
+
+    @Test
+    fun `an unreadable cached row is treated as a cache miss and replaced by the fetch`() = runTest {
+        var saved: String? = null
+        val failures = mutableListOf<Throwable>()
+
+        val flow =
+            networkBoundResource(
+                query = { flow<String?> { saved?.let { emit(it) } ?: error("bad row") } },
+                fetch = { "Fresh Data" },
+                saveFetchResult = { saved = it },
+                shouldFetch = { it == null },
+                onFetchFailed = { failures += it }
+            )
+
+        flow.test {
+            val loading = awaitItem() as Result.Loading
+            assertEquals(null, loading.data)
+
+            assertEquals("Fresh Data", (awaitItem() as Result.Success).data)
+            awaitComplete()
+        }
+        assertEquals(1, failures.size)
     }
 }

@@ -21,6 +21,8 @@ sealed interface SettingsEvent {
 
     data class OnNotificationsToggle(val enabled: Boolean) : SettingsEvent
 
+    data object OnNotificationPermissionDenied : SettingsEvent
+
     data object OnClearCacheClick : SettingsEvent
 
     data object OnSignOutClick : SettingsEvent

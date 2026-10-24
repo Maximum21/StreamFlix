@@ -1,5 +1,6 @@
 package com.asadraza.streamflix.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Home
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
+import com.asadraza.streamflix.R
 import kotlinx.serialization.Serializable
 
 /**
@@ -60,15 +62,15 @@ sealed interface Screen {
 /** A top-level destination reachable from the bottom bar. */
 enum class TopLevelDestination(
     val route: Screen,
-    val title: String,
+    @StringRes val titleRes: Int,
     val icon: ImageVector,
     val selectedIcon: ImageVector
 ) {
-    Home(Screen.Home, "Home", Icons.Outlined.Home, Icons.Filled.Home),
-    Search(Screen.Search, "Search", Icons.Outlined.Search, Icons.Filled.Search),
-    MyList(Screen.MyList, "My List", Icons.Outlined.BookmarkBorder, Icons.Filled.Bookmark),
-    Profile(Screen.ProfileManagement, "Profile", Icons.Outlined.Person, Icons.Filled.Person),
-    Settings(Screen.Settings, "Settings", Icons.Outlined.Settings, Icons.Filled.Settings);
+    Home(Screen.Home, R.string.nav_home, Icons.Outlined.Home, Icons.Filled.Home),
+    Search(Screen.Search, R.string.nav_search, Icons.Outlined.Search, Icons.Filled.Search),
+    MyList(Screen.MyList, R.string.nav_my_list, Icons.Outlined.BookmarkBorder, Icons.Filled.Bookmark),
+    Profile(Screen.ProfileManagement, R.string.nav_profile, Icons.Outlined.Person, Icons.Filled.Person),
+    Settings(Screen.Settings, R.string.nav_settings, Icons.Outlined.Settings, Icons.Filled.Settings);
 
     fun isSelected(destination: NavDestination?): Boolean = destination?.hasRoute(route::class) == true
 }

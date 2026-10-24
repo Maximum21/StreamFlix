@@ -20,6 +20,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
@@ -148,6 +149,32 @@ class ProfileViewModelsTest {
             assertTrue(awaitItem() is ProfileManagementEffect.ShowToast)
         }
         assertTrue(viewModel.state.value.showCreateDialog)
+    }
+
+    @Test
+    fun `a repeated save tap while one is running writes only once`() = runTest {
+        val pending = MutableSharedFlow<Result<Unit>>(extraBufferCapacity = 1)
+        every { saveProfile(any()) } returns pending
+        val viewModel = management(profiles(1))
+        viewModel.onEvent(ProfileManagementEvent.OnAddProfileClick)
+
+        viewModel.onEvent(ProfileManagementEvent.OnSaveProfile(name = "Kids"))
+        viewModel.onEvent(ProfileManagementEvent.OnSaveProfile(name = "Kids"))
+
+        verify(exactly = 1) { saveProfile(any()) }
+    }
+
+    @Test
+    fun `a repeated delete confirmation while one is running deletes only once`() = runTest {
+        val pending = MutableSharedFlow<Result<Unit>>(extraBufferCapacity = 1)
+        every { deleteProfile("1") } returns pending
+        val viewModel = management(profiles(3))
+        viewModel.onEvent(ProfileManagementEvent.OnDeleteProfileClick(profile("1")))
+
+        viewModel.onEvent(ProfileManagementEvent.OnDeleteConfirm)
+        viewModel.onEvent(ProfileManagementEvent.OnDeleteConfirm)
+
+        verify(exactly = 1) { deleteProfile("1") }
     }
 
     @Test

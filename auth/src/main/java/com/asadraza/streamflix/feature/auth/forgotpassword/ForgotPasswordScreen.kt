@@ -23,6 +23,7 @@ import com.asadraza.streamflix.core.ui.components.formWidth
 import com.asadraza.streamflix.feature.auth.R
 import com.asadraza.streamflix.feature.auth.common.ErrorCard
 import com.asadraza.streamflix.feature.auth.toStringRes
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,13 +32,14 @@ fun ForgotPasswordScreen(onNavigateToLogin: () -> Unit, viewModel: ForgotPasswor
     val snackbarHostState = remember { SnackbarHostState() }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 is ForgotPasswordEffect.NavigateToLogin -> onNavigateToLogin()
                 is ForgotPasswordEffect.ShowToast -> {
-                    snackbarHostState.showSnackbar(effect.message.asString(context))
+                    scope.launch { snackbarHostState.showSnackbar(effect.message.asString(context)) }
                 }
             }
         }

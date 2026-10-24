@@ -142,7 +142,9 @@ class LocalDataSourceTest {
             clearExisting = true
         )
 
-        assertNull(local.getRemoteKey(id)?.nextKey)
+        val key = local.getRemoteKey(id)
+        assertNotNull(key)
+        assertNull(key?.nextKey)
     }
 
     @Test

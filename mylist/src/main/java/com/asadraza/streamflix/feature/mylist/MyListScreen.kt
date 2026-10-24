@@ -11,12 +11,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -66,6 +69,11 @@ fun MyListScreen(
 
 @Composable
 internal fun MyListContent(state: MyListState, onEvent: (MyListEvent) -> Unit, modifier: Modifier = Modifier) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    // With items on screen a failed refresh keeps them, so the failure is shown in a snackbar
+    val refreshError = state.errorType.takeIf { state.items.isNotEmpty() }?.toUiText()?.asString()
+    LaunchedEffect(refreshError) { refreshError?.let { snackbarHostState.showSnackbar(it) } }
+
     Box(modifier = modifier.fillMaxSize()) {
         when {
             state.isLoading && state.items.isEmpty() -> LoadingIndicator()
@@ -95,6 +103,7 @@ internal fun MyListContent(state: MyListState, onEvent: (MyListEvent) -> Unit, m
                 }
             }
         }
+        SnackbarHost(snackbarHostState, modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 

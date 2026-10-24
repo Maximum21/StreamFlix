@@ -8,9 +8,9 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
 
 /**
  * Top-level navigation that adapts to the window: a bottom bar on phones and a rail on wider
@@ -41,10 +41,10 @@ fun AppNavigationSuite(
                     icon = {
                         Icon(
                             imageVector = if (selected) item.selectedIcon else item.icon,
-                            contentDescription = item.title
+                            contentDescription = stringResource(item.titleRes)
                         )
                     },
-                    label = { Text(item.title) },
+                    label = { Text(stringResource(item.titleRes)) },
                     alwaysShowLabel = true
                 )
             }
@@ -55,10 +55,11 @@ fun AppNavigationSuite(
     )
 }
 
-// Single top, pop to the start destination and restore state, per the Material navigation guidance
+// Single top, pop to Home and restore state, per the Material navigation guidance. Home rather than the
+// graph start, which is Login when the app was launched signed out
 private fun NavController.navigateToTopLevel(screen: Screen) {
     navigate(screen) {
-        popUpTo(graph.findStartDestination().id) { saveState = true }
+        popUpTo<Screen.Home> { saveState = true }
         launchSingleTop = true
         restoreState = true
     }

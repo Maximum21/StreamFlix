@@ -11,6 +11,7 @@
     <string name="settings_analytics_summary">Datos de uso anónimos que ayudan a mejorar la app</string>
     <string name="settings_notifications">Notificaciones de nuevos estrenos</string>
     <string name="settings_notifications_summary">Entérate de los nuevos títulos en cuanto lleguen</string>
+    <string name="settings_notifications_denied">Las notificaciones están bloqueadas. Permítelas en los ajustes del sistema para esta app y vuelve a activarlas.</string>
     <string name="settings_privacy_policy">Política de privacidad</string>
     <string name="settings_section_storage">Almacenamiento</string>
     <string name="settings_clear_cache">Borrar caché</string>

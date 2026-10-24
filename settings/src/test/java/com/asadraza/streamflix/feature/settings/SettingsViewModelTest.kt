@@ -115,6 +115,17 @@ class SettingsViewModelTest {
     }
 
     @Test
+    fun `a denied notification permission is explained and nothing is stored`() = runTest {
+        val viewModel = createViewModel()
+
+        viewModel.effect.test {
+            viewModel.onEvent(SettingsEvent.OnNotificationPermissionDenied)
+            assertTrue(awaitItem() is SettingsEffect.ShowMessage)
+        }
+        coVerify(exactly = 0) { setNotifications(any()) }
+    }
+
+    @Test
     fun `the selected theme is stored and reflected`() {
         val viewModel = createViewModel()
 

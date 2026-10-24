@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.map
  * Room is the single source of truth: list screens read from it through a Pager, and the
  * RemoteMediators are the only writers of the list tables. Details use networkBoundResource.
  *
- * Intentionally not @Singleton: it is a stateless forwarder bound to three interfaces. If state
+ * Intentionally not @Singleton: it is a stateless forwarder bound to four interfaces. If state
  * is added that is not an injected dependency, scope it in the same change, otherwise each
  * binding would get its own copy.
  */

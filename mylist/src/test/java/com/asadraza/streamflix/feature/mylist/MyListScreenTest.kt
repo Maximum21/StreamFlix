@@ -60,6 +60,20 @@ class MyListScreenTest {
     }
 
     @Test
+    fun `a failed refresh with titles on screen is reported without hiding them`() {
+        setContent(
+            MyListState(
+                items = listOf(MyListItem("7", "Heat", null, 1)),
+                isLoading = false,
+                errorType = com.asadraza.streamflix.core.common.result.ErrorType.Http(500)
+            )
+        )
+
+        composeRule.onNodeWithText("Server error. Please try again later").assertIsDisplayed()
+        composeRule.onNodeWithText("Heat").assertIsDisplayed()
+    }
+
+    @Test
     fun `the screen has its own top bar so the list is not drawn under the status bar`() {
         val observeMyList = mockk<ObserveMyListUseCase>()
         every { observeMyList() } returns flowOf(Result.Success(listOf(MyListItem("7", "Heat", null, 1))))

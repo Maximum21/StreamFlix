@@ -44,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,6 +71,7 @@ import com.asadraza.streamflix.core.ui.components.formWidth
 import com.asadraza.streamflix.core.ui.text.toUiText
 import com.asadraza.streamflix.core.ui.theme.Spacing
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 /**
  * Movie detail screen: backdrop, key facts, cast and similar titles for one movie.
@@ -87,6 +89,7 @@ fun DetailScreen(
     val isInMyList by viewModel.isInMyList.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
@@ -94,7 +97,9 @@ fun DetailScreen(
                 is DetailEffect.NavigateBack -> onBackClick()
                 is DetailEffect.NavigateToPlayer -> onPlayClick(effect.movieId)
                 is DetailEffect.NavigateToDetail -> onMovieClick(effect.movieId)
-                is DetailEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.message.asString(context))
+                // Showing a snackbar suspends until it is dismissed, which must not hold back navigation
+                is DetailEffect.ShowMessage ->
+                    scope.launch { snackbarHostState.showSnackbar(effect.message.asString(context)) }
             }
         }
     }

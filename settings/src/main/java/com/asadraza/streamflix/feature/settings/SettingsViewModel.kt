@@ -66,6 +66,9 @@ constructor(
             }
             is SettingsEvent.OnThemeSelect -> viewModelScope.launch { preferences.setThemeMode(event.mode) }
             is SettingsEvent.OnNotificationsToggle -> changeNotifications(event.enabled)
+            SettingsEvent.OnNotificationPermissionDenied -> viewModelScope.launch {
+                _effect.send(SettingsEffect.ShowMessage(UiText.Resource(R.string.settings_notifications_denied)))
+            }
             SettingsEvent.OnClearCacheClick -> clearLocalCache()
             SettingsEvent.OnSignOutClick -> viewModelScope.launch { logout() }
             SettingsEvent.OnDeleteAccountClick ->

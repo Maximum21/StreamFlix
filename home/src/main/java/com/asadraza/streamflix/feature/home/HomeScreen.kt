@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +52,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val trending = viewModel.categoryFeeds.getValue(MovieCategory.Trending).collectAsLazyPagingItems()
-    var refreshTick by remember { mutableIntStateOf(0) }
+    var refreshTick by rememberSaveable { mutableIntStateOf(0) }
     val feeds = remember(viewModel) { viewModel.categoryFeeds.entries.toList() }
 
     LaunchedEffect(Unit) {

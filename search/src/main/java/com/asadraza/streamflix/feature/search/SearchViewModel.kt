@@ -48,7 +48,7 @@ constructor(
     private val _state = MutableStateFlow(SearchState())
     val state: StateFlow<SearchState> = _state.asStateFlow()
 
-    private val _effect = Channel<SearchEffect>()
+    private val _effect = Channel<SearchEffect>(Channel.BUFFERED)
     val effect = _effect.receiveAsFlow()
 
     private val queryFlow = MutableStateFlow("")

@@ -40,7 +40,7 @@ tasks.matching { it.name == "preReleaseBuild" }.configureEach {
 android {
     namespace = "com.asadraza.streamflix.core.network"
     defaultConfig {
-        buildConfigField("String", "TMDB_ACCESS_TOKEN", "\"$tmdbToken\"")
+        buildConfigField("String", "TMDB_ACCESS_TOKEN", "\"$escapedToken\"")
     }
     buildFeatures { buildConfig = true }
 }

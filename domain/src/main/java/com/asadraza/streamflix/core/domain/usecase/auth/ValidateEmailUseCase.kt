@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 /**
  * Use case for email validation.
- * Returns Result with validation error or success.
+ * Returns a ValidationResult: Valid, or Invalid with the first rule that failed.
  */
 class ValidateEmailUseCase
 @Inject

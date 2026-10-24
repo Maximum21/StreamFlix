@@ -110,7 +110,7 @@ class ProfileRepositoryImplTest {
     }
 
     @Test
-    fun `getProfiles failure keeps the last known list`() = runTest {
+    fun `getProfiles failure is reported without data`() = runTest {
         val repository = repository()
         repository.create("A")
         remote.failure = IllegalStateException("boom")

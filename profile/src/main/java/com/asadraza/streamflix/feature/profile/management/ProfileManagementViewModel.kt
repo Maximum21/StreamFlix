@@ -39,6 +39,10 @@ constructor(
 
     private var loadJob: Job? = null
 
+    // A repeated tap must not start a second write while one is still running
+    private var saveJob: Job? = null
+    private var deleteJob: Job? = null
+
     init {
         loadProfiles()
     }
@@ -180,6 +184,7 @@ constructor(
      * Save a new or edited profile
      */
     private fun saveProfile(name: String, avatarUrl: String, isKidsProfile: Boolean) {
+        if (saveJob?.isActive == true) return
         val editing = _state.value.editingProfile
         val profile =
             editing?.copy(name = name.trim(), avatarUrl = avatarUrl, isKidsProfile = isKidsProfile)
@@ -192,7 +197,7 @@ constructor(
                 )
         val successMessage = if (editing != null) R.string.profile_updated else R.string.profile_created
 
-        viewModelScope.launch {
+        saveJob = viewModelScope.launch {
             saveProfileUseCase(profile)
                 .collect { result ->
                     when (result) {
@@ -224,8 +229,9 @@ constructor(
      */
     private fun confirmDelete() {
         val profile = _state.value.profileToDelete ?: return
+        if (deleteJob?.isActive == true) return
 
-        viewModelScope.launch {
+        deleteJob = viewModelScope.launch {
             deleteProfileUseCase(profile.id)
                 .collect { result ->
                     when (result) {

@@ -27,7 +27,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
     crossinline onFetchFailed: (Throwable) -> Unit = { }
 ): Flow<Result<ResultType>> = flow {
     // Step 1: Get initial cached data (can be null)
-    val cachedData = query().first()
+    val cachedData = firstOrNullIfUnreadable(query, onFetchFailed)
 
     // Step 2: Emit Loading with cached data (stale data support)
     emit(Result.Loading(data = cachedData))
@@ -92,6 +92,23 @@ inline fun <ResultType, RequestType> networkBoundResource(
             }
         )
     }
+}
+
+/**
+ * The first cached value, or null when it cannot be read. A row that fails to decode is a cache
+ * miss, so the fetch replaces it instead of the error reaching the collector.
+ */
+@PublishedApi
+internal suspend inline fun <T> firstOrNullIfUnreadable(
+    crossinline query: () -> Flow<T?>,
+    crossinline onFailure: (Throwable) -> Unit
+): T? = try {
+    query().first()
+} catch (cancellation: CancellationException) {
+    throw cancellation
+} catch (throwable: Throwable) {
+    onFailure(throwable)
+    null
 }
 
 /**

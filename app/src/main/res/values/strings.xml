@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name" translatable="false">@string/brand_name</string>
 
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_my_list">My List</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_settings">Settings</string>
+
     <string name="notification_channel_id" translatable="false">new_releases</string>
     <string name="notification_channel_name">New releases</string>
 

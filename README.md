@@ -209,7 +209,7 @@ StreamFlix/
 ├── build-logic/          convention plugins
 ├── firebase/             Firestore rules and their emulator tests
 ├── config/detekt/        static analysis configuration
-└── docs/                 architecture decisions, security, analytics, store checklist
+└── docs/                 architecture decisions, security, analytics, privacy policy
 ```
 
 ## Documentation

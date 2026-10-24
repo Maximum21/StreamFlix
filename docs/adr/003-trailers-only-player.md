@@ -32,6 +32,6 @@ video for many others.
 ## Consequences
 
 - Playback depends on YouTube availability and on the embedded player's terms; a release
-  checklist item covers the YouTube API Services terms and the TMDB attribution requirement.
+  review should cover the YouTube API Services terms and the TMDB attribution requirement.
 - If a licensed streaming source is added later, a new ADR should introduce a player abstraction
   at that point, instead of keeping an unused one now.

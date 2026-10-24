@@ -13,6 +13,7 @@
     <string name="settings_analytics_summary">Anonymous usage data that helps improve the app</string>
     <string name="settings_notifications">New release notifications</string>
     <string name="settings_notifications_summary">Hear about new titles as they arrive</string>
+    <string name="settings_notifications_denied">Notifications are blocked. Allow them in the system settings for this app to turn this on.</string>
     <string name="settings_privacy_policy">Privacy policy</string>
 
     <string name="settings_section_storage">Storage</string>

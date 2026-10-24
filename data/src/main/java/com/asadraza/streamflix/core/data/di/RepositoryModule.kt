@@ -31,7 +31,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 /**
- * Dependency Injection module for repositories and data sources
+ * Dependency Injection module that binds the domain interfaces (repositories, analytics tracker,
+ * feature flags, notifications) to their implementations
  *
  * @Binds:
  * - More efficient than @Provides for simple interface-to-impl binding

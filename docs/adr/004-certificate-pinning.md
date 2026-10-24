@@ -41,4 +41,4 @@ before the old certificates leave the chain. Check the chain again before each r
 
 - A pinning failure shows as a network error for every TMDB request. If this happens in
   production, a release with updated pins is the fix; the expiration date bounds the exposure.
-- The pins have to be maintained, which is part of the release checklist.
+- The pins have to be maintained: rotate them and update the expiry date before it passes.

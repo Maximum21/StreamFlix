@@ -1,6 +1,7 @@
 package com.asadraza.streamflix.feature.settings
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -143,7 +144,8 @@ internal fun SettingsContent(
         SectionHeader(R.string.settings_section_privacy)
         NotificationsRow(
             enabled = state.notificationsEnabled,
-            onToggle = { onEvent(SettingsEvent.OnNotificationsToggle(it)) }
+            onToggle = { onEvent(SettingsEvent.OnNotificationsToggle(it)) },
+            onPermissionDenied = { onEvent(SettingsEvent.OnNotificationPermissionDenied) }
         )
         ListItem(
             headlineContent = { Text(stringResource(R.string.settings_analytics)) },
@@ -238,10 +240,10 @@ private fun Modifier.clickableRow(onClick: () -> Unit): Modifier = clickable(rol
 
 /** Android 13+ asks for notification permission at runtime; it is requested only when turning the switch on. */
 @Composable
-private fun NotificationsRow(enabled: Boolean, onToggle: (Boolean) -> Unit) {
+private fun NotificationsRow(enabled: Boolean, onToggle: (Boolean) -> Unit, onPermissionDenied: () -> Unit) {
     val context = LocalContext.current
     val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) onToggle(true)
+        if (granted) onToggle(true) else onPermissionDenied()
     }
 
     ListItem(
@@ -275,9 +277,13 @@ private fun LanguageRow() {
         headlineContent = { Text(stringResource(R.string.settings_language)) },
         supportingContent = { Text(stringResource(R.string.settings_language_summary)) },
         modifier = Modifier.clickableRow {
-            context.startActivity(
-                Intent(Settings.ACTION_APP_LOCALE_SETTINGS, Uri.fromParts("package", context.packageName, null))
-            )
+            try {
+                context.startActivity(
+                    Intent(Settings.ACTION_APP_LOCALE_SETTINGS, Uri.fromParts("package", context.packageName, null))
+                )
+            } catch (_: ActivityNotFoundException) {
+                // Some devices ship without the per-app language screen, so the row does nothing there
+            }
         }
     )
 }

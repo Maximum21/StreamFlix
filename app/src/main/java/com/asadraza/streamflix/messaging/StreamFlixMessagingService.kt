@@ -31,7 +31,7 @@ class StreamFlixMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val built = NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_notification)
             .setContentTitle(notification.title)
             .setContentText(notification.body)
             .setAutoCancel(true)

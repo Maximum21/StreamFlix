@@ -36,4 +36,24 @@ class ValidationUseCasesTest {
         assertEquals(ValidationResult.Valid, validateName("Asad"))
         assertEquals(ValidationResult.Valid, validateName("A".repeat(50)))
     }
+
+    @Test
+    fun `password length boundary is eight characters`() {
+        assertEquals(invalid(ValidationError.PASSWORD_TOO_SHORT), validatePassword("Passwo1"))
+        assertEquals(ValidationResult.Valid, validatePassword("Passwor1"))
+    }
+
+    @Test
+    fun `the first failing password rule wins when several fail`() {
+        // Too short, and also missing an uppercase letter and a digit
+        assertEquals(invalid(ValidationError.PASSWORD_TOO_SHORT), validatePassword("abc"))
+    }
+
+    @Test
+    fun `name length boundaries are two and fifty characters`() {
+        assertEquals(invalid(ValidationError.NAME_TOO_SHORT), validateName("A"))
+        assertEquals(ValidationResult.Valid, validateName("Al"))
+        assertEquals(ValidationResult.Valid, validateName("A".repeat(50)))
+        assertEquals(invalid(ValidationError.NAME_TOO_LONG), validateName("A".repeat(51)))
+    }
 }

@@ -60,7 +60,7 @@ constructor(
             PlayerEvent.OnBackPressed -> viewModelScope.launch { _effect.send(PlayerEffect.NavigateBack) }
             PlayerEvent.OnRetry -> loadTrailer()
             is PlayerEvent.OnPositionChanged -> recordIfDue(event.positionMillis)
-            is PlayerEvent.OnPlaybackStopped -> record(event.positionMillis)
+            is PlayerEvent.OnPlaybackStopped -> if (lastRecordedMillis != NOT_RECORDED) record(event.positionMillis)
         }
     }
 

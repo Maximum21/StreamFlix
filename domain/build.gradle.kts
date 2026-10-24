@@ -11,5 +11,5 @@ dependencies {
     implementation(libs.bundles.coroutines)
 
     // Paging
-    implementation(libs.bundles.paging)
+    implementation(libs.paging.common)
 }

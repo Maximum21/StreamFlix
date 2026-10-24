@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_search">Buscar</string>
+    <string name="nav_my_list">Mi lista</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_settings">Ajustes</string>
     <string name="notification_channel_name">Nuevos estrenos</string>
     <string name="consent_title">¿Ayudar a mejorar %1$s?</string>
     <string name="consent_message">Comparte datos de uso anónimos, como qué pantallas se usan, para que podamos mejorar la app. Nunca incluyen lo que buscas ni los datos de tu cuenta. Puedes cambiarlo cuando quieras en Ajustes.</string>

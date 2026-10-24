@@ -1,7 +1,6 @@
 package com.asadraza.streamflix.navigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 
 /**
  * Thin wrapper over [NavController] that names the navigation operations the app uses.
@@ -15,7 +14,8 @@ class AppNavigator(private val navController: NavController) {
 
     /** Replaces the whole back stack, e.g. after login or sign-out. */
     fun clearBackStackAndNavigateTo(screen: Screen) = navController.navigate(screen) {
-        popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+        // The graph id clears everything, even when the start destination (Login) is already gone
+        popUpTo(navController.graph.id) { inclusive = true }
         launchSingleTop = true
     }
 

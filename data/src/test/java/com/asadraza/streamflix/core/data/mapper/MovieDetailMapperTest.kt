@@ -1,8 +1,5 @@
 package com.asadraza.streamflix.core.data.mapper
 
-import com.asadraza.streamflix.core.common.result.ErrorType
-import com.asadraza.streamflix.core.common.result.Result
-import com.asadraza.streamflix.core.data.util.networkResult
 import com.asadraza.streamflix.core.model.movie.Genre
 import com.asadraza.streamflix.core.network.model.CastDto
 import com.asadraza.streamflix.core.network.model.CreditsDto
@@ -15,12 +12,6 @@ import com.asadraza.streamflix.core.network.model.SimilarResponse
 import com.asadraza.streamflix.core.network.model.SpokenLanguageDto
 import com.asadraza.streamflix.core.network.model.VideoDto
 import com.asadraza.streamflix.core.network.model.VideosResponse
-import java.net.UnknownHostException
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.awaitCancellation
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -112,32 +103,5 @@ class MovieDetailMapperTest {
         assertEquals("English", detail.spokenLanguages.single().name)
         assertEquals("key1", detail.officialTrailer?.key)
         assertEquals("1h 30m", detail.formattedRuntime)
-    }
-
-    @Test
-    fun `networkResult emits loading then success`() = runTest {
-        val emissions = networkResult { "data" }.toList()
-
-        assertTrue(emissions[0] is Result.Loading)
-        assertEquals(Result.Success("data"), emissions[1])
-    }
-
-    @Test
-    fun `networkResult maps failures to error types`() = runTest {
-        val emissions = networkResult<String> { throw UnknownHostException() }.toList()
-
-        val error = emissions.last() as Result.Error
-        assertTrue(error.type is ErrorType.Network)
-    }
-
-    @Test
-    fun `networkResult lets cancellation through instead of reporting it as an error`() = runTest {
-        val job = launch(start = CoroutineStart.UNDISPATCHED) {
-            networkResult<String> { awaitCancellation() }.toList()
-        }
-        job.cancel()
-        job.join()
-
-        assertTrue(job.isCancelled)
     }
 }

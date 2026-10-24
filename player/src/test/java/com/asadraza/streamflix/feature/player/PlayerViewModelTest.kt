@@ -153,6 +153,16 @@ class PlayerViewModelTest {
     }
 
     @Test
+    fun `leaving before playback started records nothing`() {
+        coEvery { getMovieDetails("7") } returns flowOf(Result.Success(testMovieDetail("7")))
+        val viewModel = createViewModel()
+
+        viewModel.onEvent(PlayerEvent.OnPlaybackStopped(0L))
+
+        coVerify(exactly = 0) { recordWatch(any()) }
+    }
+
+    @Test
     fun `nothing is recorded before the movie is known`() {
         coEvery { getMovieDetails("7") } returns flowOf(Result.Error(Exception(), ErrorType.Http(500)))
         val viewModel = createViewModel()

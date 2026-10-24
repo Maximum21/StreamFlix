@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Use case for deleting a user profile.
  *
- * Business rules enforced:
- * - Cannot delete last remaining profile
+ * The rule that the last profile cannot be deleted is enforced where the data lives, in the profile
+ * data source (it throws LastProfileException), and the management screen also hides the option.
  *
  * Returns Flow for loading/success/error states.
  */
