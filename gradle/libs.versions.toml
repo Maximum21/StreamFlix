@@ -40,7 +40,7 @@ ksp = "2.0.21-1.0.27"
 
 # Coroutines
 coroutines = "1.10.2"
-turbine = "1.0.0"
+turbine = "1.2.1"
 
 # Network
 retrofit = "2.11.0"
