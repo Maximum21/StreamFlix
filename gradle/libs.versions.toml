@@ -34,7 +34,7 @@ firebasePerfPlugin = "1.4.2"
 # Gson
 
 # Dependency Injection
-hilt = "2.52"
+hilt = "2.60.1"
 hiltNavigationCompose = "1.1.0"
 ksp = "2.0.21-1.0.27"
 
