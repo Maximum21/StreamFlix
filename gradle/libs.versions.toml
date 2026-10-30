@@ -61,7 +61,7 @@ ytVersion = "13.0.0"
 
 detekt = "1.23.6"
 kover = "0.9.1"
-ktlint = "12.1.1"
+ktlint = "14.2.0"
 
 # ═══════════════════════════════════════════════════════════
 #  NEW DEPENDENCIES (Added for the rewritten app module)
