@@ -51,7 +51,7 @@ kotlinxSerialization = "1.8.1"
 # Testing
 mockk = "1.13.8"
 truth = "1.1.5"
-robolectric = "4.14.1"
+robolectric = "4.17"
 androidxTestCore = "1.6.1"
 
 # Image Loading
